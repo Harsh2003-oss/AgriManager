@@ -1,3 +1,7 @@
+require("dotenv").config();//Load environment variables
+const connectDB=require("./db/db")
+connectDB();
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -6,6 +10,9 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var cropsRouter = require('./routes/crops')
+var farmsRouter = require('./routes/farms')
+var expensesRouter = require('./routes/expenses')
 
 var app = express();
 
@@ -21,6 +28,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/crops',cropsRouter);
+app.use('/farms',farmsRouter);
+app.use('/expenses',expensesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
