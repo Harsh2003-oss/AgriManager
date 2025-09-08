@@ -28,4 +28,5 @@ const createFarm = async (req,res) => {
     }  
     }
 
-    module.exports = {createFarm};
+   
+    module.exports = {createFarm , getFarms , getFarmsById};
