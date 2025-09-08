@@ -11,7 +11,7 @@ const farmSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"User"
     },
-    
+
 location: {
     address: String,
     coordinates: {
@@ -32,3 +32,5 @@ location: {
 },
 {timestamps:true}
 )
+
+module.exports = mongoose.model("Farm",farmSchema);
