@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const user=require("../models/User");
 
 const authenticateToken = (req, res, next) => {
     try {
@@ -11,10 +12,12 @@ const authenticateToken = (req, res, next) => {
     }
 
     const decoded = jwt.verify(token,process.env.JWT_SECRET);
+       console.log("Decoded user:", decoded); 
     req.user = decoded;
     next();
 
     } catch (error) {
+        console.log(error);
         res.status(401).json({error:"Invalid Token"})
     }
 }

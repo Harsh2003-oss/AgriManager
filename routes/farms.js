@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
-var {createFarm} = require("../controllers/farmController") 
+var {createFarm,getFarms,getFarmsById} = require("../controllers/farmController") 
+const authenticateToken = require("../middleware/auth");
 
-router.post('/create',createFarm)
+router.post('/create',authenticateToken,createFarm)
 
-router.get('/',function(req,res){
-    res.json({message:"Farms API endpoint working!"})
-});
+router.get('/myfarms',authenticateToken,getFarms)
+    
 
+
+router.get('/:id',authenticateToken,getFarmsById)
 
 
 module.exports = router;
