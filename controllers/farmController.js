@@ -63,4 +63,60 @@ const getFarmsById = async (req,res) => {
     }
 }
 
-    module.exports = {createFarm , getFarms , getFarmsById};
+const updateFarm = async (req,res) => {
+    try {
+ 
+        const {name,location,totalArea,fields} = req.body;
+
+    const farm = await farmModel.findById(req.params.id);
+
+    if(!farm ){
+        return res.status(404).json({error:"Farm not found"})
+    }
+
+if(farm.owner !== req.user.id){
+    return res.status(401).json({error:"You are not authorized to update this farm"})
+}
+
+  farm.name=name;
+  farm.location=location;
+  farm.totalArea=totalArea;
+  farm.fields=fields;
+
+    farm.save();
+
+    return res.status(200).json({
+        message:"Farm updated successfully",
+        farm
+    })
+
+    } catch (error) {
+        res.status(400).json({error:error.message})
+    }
+}
+
+const deleteFarm = async (req,res) => {
+    try {
+  
+    const farm = await farmModel.findById(req.params.id);
+
+    if(!farm){
+        return res.status(404).json({error:"Farm not found"})
+    }
+
+    if(farm.owner !== req.user.id){
+        return res.status(401).json({error:"You are not authorized to delete this farm"})
+    }
+
+    await farmModel.findByIdAndDelete(req.params.id);
+    return res.status(200).json({
+        message:"Farm deleted successfully"
+    })
+
+        
+    } catch (error) {
+        res.status(400).json({error:error.message})
+    }
+}
+
+    module.exports = {createFarm , getFarms , getFarmsById, updateFarm, deleteFarm};
