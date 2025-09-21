@@ -3,7 +3,7 @@ var User = require("../models/User");
 const registerUser = async (req, res) => {
 
     try {
-        
+        console.log('API Key:', process.env.WEATHER_API_KEY ? 'Present' : 'Missing');
         const {name,email,password,phonenumber} = req.body;
 
         if(!name || !email || !password || !phonenumber){
