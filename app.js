@@ -1,6 +1,7 @@
 require("dotenv").config();//Load environment variables
 const connectDB=require("./db/db")
 connectDB();
+const cors = require('cors');
 
 var createError = require('http-errors');
 var express = require('express');
@@ -26,6 +27,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors({
+  origin:'http://localhost:5173'
+}))
 
 app.use('/', userRouter);
 app.use('/users', usersRouter);
